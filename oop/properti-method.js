@@ -24,8 +24,6 @@
 
 // motor2.maju();
 
-
-
 // class Data {
 //     constructor(firstName, lastName) {
 //         this.firstName = firstName;
@@ -49,8 +47,6 @@
 // data.fullName = 'kaneki cahyo';
 // console.log(data);
 // console.log(data.fullName);
-
-
 
 // class Bio {
 //     constructor(nama, makananFavorit, minumanFavorit, gender) {
@@ -80,26 +76,67 @@
 // console.log(bio.gender);
 // bio.gender = 'kipas angin';
 
+// class Motor {
+//     constructor(merek, warna, kecepatan) {
+//         this.merek = merek;
+//         this.warna = warna;
+//         this.kecepatan = kecepatan;
+//         this._plat = `${merek}-${Math.floor(Math.random()* 1000) + 1}`;
+//     }
 
+//     get plat() {
+//         return this._plat;
+//     }
+
+//     set plat(plat) {
+//         console.log(`data tidak bisa diubah`);
+//     }
+// }
+
+// const motor1 = new Motor('supra bapak', 'hitam', 1000);
+// console.log(motor1);
+// console.log(motor1.plat);
+// motor1.plat = 'BMW-1';
 
 class Motor {
-    constructor(merek, warna, kecepatan) {
-        this.merek = merek;
-        this.warna = warna;
-        this.kecepatan = kecepatan;
-        this._plat = `${merek}-${Math.floor(Math.random()* 1000) + 1}`;
-    }
+  #plat = null;
+  constructor(merek, warna, kecepatan) {
+    this.merek = merek;
+    this.warna = warna;
+    this.kecepatan = kecepatan;
+    this.#plat = this.#generatePlat();
+  }
 
-    get plat() {
-        return this._plat;
-    }
+  get plat() {
+    return this.#plat;
+  }
 
-    set plat(plat) {
-        console.log(`data tidak bisa diubah`);
-    }
+  set plat(plat) {
+    console.log(`kamu gabisa ubah data ini`);
+  }
+
+  drive() {
+    console.log(`${this.merek} berwarna ${this.warna} is driving`);
+  }
+
+  maju() {
+    console.log(`${this.merek} berwarna ${this.warna} melaju`);
+  }
+
+  mundur() {
+    console.log(`${this.merek} berwarna ${this.warna} mundur`);
+  }
+
+  belok(arah) {
+    console.log(`${this.merek} berwarna ${this.warna} belok ke-${arah}`);
+  }
+
+  #generatePlat() {
+    return `${this.merek}-${Math.floor(Math.random() * 1000) + 1}`;
+  }
 }
 
-const motor1 = new Motor('supra bapak', 'hitam', 1000);
-console.log(motor1);
-console.log(motor1.plat);
-motor1.plat = 'BMW-1';
+const motor = new Motor("supra bapak", "hitam", 1000);
+console.log(motor);
+motor.belok("kanan");
+console.log(motor.plat);

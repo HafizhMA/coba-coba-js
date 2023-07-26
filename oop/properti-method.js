@@ -140,3 +140,5 @@ const motor = new Motor("supra bapak", "hitam", 1000);
 console.log(motor);
 motor.belok("kanan");
 console.log(motor.plat);
+motor.plat = "tes";
+// motor.#generatePlat = 'testing'; tidak bisa diakses karena #generatePlat privat

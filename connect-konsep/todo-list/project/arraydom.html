@@ -56,23 +56,24 @@ function displayValue() {
     output.appendChild(listItem);
     listItem.classList.add('noDecoration');
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'delete';
-    deleteButton.addEventListener('click', ()=> deleteInputan(index));
-    listItem.appendChild(deleteButton);
-
-    const updateButton = document.createElement('button');
-    updateButton.textContent = 'update';
-    updateButton.addEventListener('click', ()=> updateInputan(index));
-    listItem.appendChild(updateButton);
-
     const checkBox = document.createElement('input');
     checkBox.type='checkbox';
     checkBox.id='myCheckBox';
     listItem.appendChild(checkBox);
     checkBox.addEventListener('click', () => {
       checkBox.checked? listItem.classList.add('done') : listItem.classList.remove('done');
-    })
+    });
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'update';
+    updateButton.addEventListener('click', ()=> updateInputan(index));
+    listItem.appendChild(updateButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'delete';
+    deleteButton.addEventListener('click', ()=> deleteInputan(index));
+    listItem.appendChild(deleteButton);
+
   });
 
   if (dataArr.length === 0) {

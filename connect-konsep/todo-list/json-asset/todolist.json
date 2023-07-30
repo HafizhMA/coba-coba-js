@@ -1,0 +1,32 @@
+{
+  "todo": [
+    {
+      "id": 1,
+      "task": "Mengerjakan tugas kuliah",
+      "due_date": "2023-08-15",
+      "priority": "Tinggi",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "task": "Belanja bahan makanan",
+      "due_date": "2023-07-31",
+      "priority": "Sedang",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "task": "Buat presentasi proyek",
+      "due_date": "2023-08-05",
+      "priority": "Tinggi",
+      "completed": true
+    },
+    {
+      "id": 4,
+      "task": "Bersihkan kamar",
+      "due_date": "2023-07-30",
+      "priority": "Rendah",
+      "completed": false
+    }
+  ]
+}

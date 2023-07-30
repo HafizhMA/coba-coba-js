@@ -32,6 +32,14 @@ function deleteInputan(index){
   displayValue();
 }
 
+function updateInputan(index){
+  const updatedValue = prompt('update the item:', dataArr[index]);
+  if (updatedValue !== null){
+    dataArr[index] =updatedValue;
+    displayValue();
+  }
+}
+
 // Function to display list items
 function displayValue() {
   output.innerHTML = '';
@@ -46,6 +54,11 @@ function displayValue() {
     deleteButton.textContent = 'delete';
     deleteButton.addEventListener('click', ()=> deleteInputan(index));
     listItem.appendChild(deleteButton);
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'update';
+    updateButton.addEventListener('click', ()=> updateInputan(index));
+    listItem.appendChild(updateButton);
   });
 
   if (dataArr.length === 0) {

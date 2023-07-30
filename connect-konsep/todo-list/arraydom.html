@@ -6,6 +6,10 @@
     .noDecoration{
         list-style: none;
     }
+
+    .done{
+      color: red;
+    }
   </style>
 </head>
 <body>
@@ -40,6 +44,8 @@ function updateInputan(index){
   }
 }
 
+
+
 // Function to display list items
 function displayValue() {
   output.innerHTML = '';
@@ -59,6 +65,14 @@ function displayValue() {
     updateButton.textContent = 'update';
     updateButton.addEventListener('click', ()=> updateInputan(index));
     listItem.appendChild(updateButton);
+
+    const checkBox = document.createElement('input');
+    checkBox.type='checkbox';
+    checkBox.id='myCheckBox';
+    listItem.appendChild(checkBox);
+    checkBox.addEventListener('click', () => {
+      checkBox.checked? listItem.classList.add('done') : listItem.classList.remove('done');
+    })
   });
 
   if (dataArr.length === 0) {

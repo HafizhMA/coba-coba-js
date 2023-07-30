@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input dan Tampilkan</title>
+</head>
+<body>
+  <label for="inputText">Kegiatan:</label>
+  <input type="text" id="inputText">
+  <button id="submit">Tampilkan</button>
+
+  <p id="hasil"></p>
+
+  <script>
+    const input = document.getElementById('inputText');
+    const submit = document.getElementById('submit');
+
+    function resetInputan(){
+        input.value = "";
+    }
+
+    submit.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const result = input.value;
+        const hasil = document.getElementById('hasil');
+        hasil.innerText = result === '' ? `tidak boleh kosong` : `kegiatan hari ini adalah ${result}`;
+
+        resetInputan();
+    });
+  </script>
+</body>
+</html>

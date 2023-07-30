@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>todo list</title>
+  <style>
+    .noDecoration{
+        list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <label for="inputText">Kegiatan:</label>
+  <input type="text" id="inputText">
+  <button id="submit">Tampilkan</button>
+
+  <ul class="output"></ul>
+
+  <script>
+    // DOM Elements
+const input = document.getElementById('inputText');
+const submit = document.getElementById('submit');
+const output = document.querySelector('.output');
+const dataArr = [];
+
+// Function to reset input value
+function resetInputan() {
+  input.value = '';
+}
+
+// Function to display list items
+function displayValue() {
+  output.innerHTML = '';
+
+  dataArr.forEach((data, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${data}`;
+    output.appendChild(listItem);
+    listItem.classList.add('noDecoration');
+  });
+
+  if (dataArr.length === 0) {
+    const emptyMessage = document.createElement('li');
+    emptyMessage.textContent = 'Data tidak boleh kosong';
+    output.appendChild(emptyMessage);
+  }
+}
+
+// Function to handle submit button click
+function handleSubmitClick(e) {
+  e.preventDefault();
+  const result = input.value;
+  if (result !== '') {
+    dataArr.push(result);
+  }
+  resetInputan();
+  displayValue();
+}
+
+// Event listener for submit button click
+submit.addEventListener('click', handleSubmitClick);
+
+  </script>
+</body>
+</html>

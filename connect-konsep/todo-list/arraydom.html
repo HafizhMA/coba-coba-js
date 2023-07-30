@@ -27,6 +27,11 @@ function resetInputan() {
   input.value = '';
 }
 
+function deleteInputan(index){
+  dataArr.splice(index,1);
+  displayValue();
+}
+
 // Function to display list items
 function displayValue() {
   output.innerHTML = '';
@@ -36,11 +41,16 @@ function displayValue() {
     listItem.textContent = `${index + 1}. ${data}`;
     output.appendChild(listItem);
     listItem.classList.add('noDecoration');
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'delete';
+    deleteButton.addEventListener('click', ()=> deleteInputan(index));
+    listItem.appendChild(deleteButton);
   });
 
   if (dataArr.length === 0) {
     const emptyMessage = document.createElement('li');
-    emptyMessage.textContent = 'Data tidak boleh kosong';
+    emptyMessage.textContent = 'Data masih kosong';
     output.appendChild(emptyMessage);
   }
 }

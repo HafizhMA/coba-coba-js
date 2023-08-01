@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+
+<body>
+  <section style="padding: 100px 0;">
+    <div class="container bg-dark rounded-3" style="padding: 20px;">
+      <div class="text-center">
+        <h1 class="text-white">Simple Note</h1>
+      </div>
+      <form id="myForm">
+        <div class="input-group my-3">
+          <span class="input-group-text">Note</span>
+          <textarea class="form-control" aria-label="Note" id="note"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <form id="updateForm" style="display: none;">
+        <div class="input-group my-3">
+          <span class="input-group-text">Update Note</span>
+          <textarea class="form-control" aria-label="Update Note" id="updateNote"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+
+      <div class="my-3" id="output"></div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script>
+    const form = document.getElementById('myForm');
+    const noteInput = document.getElementById('note');
+    const output = document.getElementById('output');
+
+    const notes = [];
+
+    // display note
+    function updateOutput() {
+      if (notes.length === 0) {
+        output.innerHTML = '<p class="text-white">notes masih kosong.</p>';
+        return;
+      }
+
+      const notesHtml = notes.map((note, index) => `
+      <div class="item my-3 rounded-3 bg-dark-subtle" style="padding: 10px;">
+      <pre>${note}</pre>
+      <button onclick="updateNote(${index})" class="btn btn-warning">update</button>
+      <button onclick="deleteNote(${index})" class="btn btn-danger">delete</button>
+      </div>
+      `).join('');
+      output.innerHTML = notesHtml;
+    }
+
+    // add note
+    function addNote() {
+      const noteValue = noteInput.value.trim();
+
+      if (!noteValue) {
+        const h3 = document.createElement('h3');
+        h3.innerText = 'Tolong isi inputan';
+        h3.className = 'text-white';
+        output.appendChild(h3);
+        return;
+      }
+
+      notes.push(noteValue);
+      updateOutput();
+      noteInput.value = ''; // Reset 
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      addNote();
+    });
+
+    // update note
+    function updateNote(index) {
+      const updateForm = document.getElementById('updateForm');
+      const updateNoteInput = document.getElementById('updateNote');
+      updateNoteInput.value = notes[index]; // Set the textarea value to the current note content
+      updateForm.style.display = 'block'; // Show the update form
+
+      updateForm.onsubmit = (e) => {
+        e.preventDefault();
+        const updatedNoteValue = updateNoteInput.value.trim();
+
+        if (!updatedNoteValue) {
+          return;
+        }
+
+        notes[index] = updatedNoteValue;
+        updateForm.style.display = 'none'; // sembunyikan update form
+        updateOutput();
+      };
+    }
+
+    function deleteNote(index) {
+      const updateForm = document.getElementById('updateForm');
+      updateForm.style.display = 'none';
+      //delete cukup yang bawah, bagian atas hanya efek untuk menghilangkan form update
+      notes.splice(index, 1);
+      updateOutput();
+    }
+
+  </script>
+</body>
+
+</html>

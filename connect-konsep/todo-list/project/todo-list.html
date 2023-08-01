@@ -3,19 +3,16 @@
 <head>
   <title>todo list</title>
   <!-- Add the latest Bootstrap CSS via CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
     .noDecoration{
         list-style: none;
-        margin-top: 5px;
     }
 
     .done{
       color: red;
-      transition: .3s;
     }
-
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container mt-5">
@@ -27,20 +24,18 @@
       <button type="submit" class="btn btn-primary">Tampilkan</button>
     </form>
 
-    <ul class="mt-3 list-group output"></ul>
+    <ul class="list-group output"></ul>
   </div>
 
   <!-- Add the latest Bootstrap JavaScript bundle via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // Your existing JavaScript code goes here...
-
     // DOM Elements
     const form = document.getElementById('todoForm');
     const input = document.getElementById('inputText');
     const output = document.querySelector('.output');
-    const dataArr = [];
+    let dataArr = [];
 
     // Function to reset input value
     function resetInputan() {
@@ -49,6 +44,7 @@
 
     function deleteInputan(index) {
       dataArr.splice(index, 1);
+      saveDataToLocalStorage();
       displayValue();
     }
 
@@ -56,6 +52,7 @@
       const updatedValue = prompt('update the item:', dataArr[index]);
       if (updatedValue !== null) {
         dataArr[index] = updatedValue;
+        saveDataToLocalStorage();
         displayValue();
       }
     }
@@ -74,7 +71,6 @@
         checkBox.type = 'checkbox';
         checkBox.id = 'myCheckBox';
         listItem.appendChild(checkBox);
-        checkBox.classList.add('ms-3');
         checkBox.addEventListener('click', () => {
           checkBox.checked ? listItem.classList.add('done') : listItem.classList.remove('done');
         });
@@ -83,20 +79,32 @@
         updateButton.textContent = 'update';
         updateButton.addEventListener('click', () => updateInputan(index));
         listItem.appendChild(updateButton);
-        updateButton.classList.add('ms-3', 'btn', 'btn-secondary');
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'delete';
         deleteButton.addEventListener('click', () => deleteInputan(index));
         listItem.appendChild(deleteButton);
-        deleteButton.classList.add('ms-3', 'btn', 'btn-danger');
       });
 
       if (dataArr.length === 0) {
         const emptyMessage = document.createElement('li');
         emptyMessage.textContent = 'Data masih kosong';
         output.appendChild(emptyMessage);
-        emptyMessage.classList.add('noDecoration');
+      }
+    }
+
+    // Function to save data to Local Storage
+    function saveDataToLocalStorage() {
+      localStorage.setItem('dataArr', JSON.stringify(dataArr));
+    }
+
+    // Function to load data from Local Storage
+    function loadDataFromLocalStorage() {
+      const storedData = localStorage.getItem('dataArr');
+      if (storedData) {
+        dataArr = JSON.parse(storedData);
+      } else {
+        dataArr = [];
       }
     }
 
@@ -106,6 +114,7 @@
       const result = input.value;
       if (result !== '') {
         dataArr.push(result);
+        saveDataToLocalStorage();
       }
       resetInputan();
       displayValue();
@@ -113,6 +122,10 @@
 
     // Event listener for form submission
     form.addEventListener('submit', handleSubmit);
+
+    // Load data from Local Storage when the page loads
+    loadDataFromLocalStorage();
+    displayValue();
   </script>
 </body>
 </html>

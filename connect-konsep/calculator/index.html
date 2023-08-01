@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Calculator</title>
+</head>
+<body>
+    <section style="padding: 100px 0;">
+        <div class="container rounded-3" style="padding: 20px;background-color: gray;">
+            <div class="row text-center">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                          <h3>Welcome To Calculator Sederhana... udh gitu aja</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                          <h3 id="output">0</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('1')" class="card">
+                        <div class="card-body">
+                          <h3>1</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('2')" class="card">
+                        <div class="card-body">
+                          <h3>2</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('3')" class="card">
+                        <div class="card-body">
+                          <h3>3</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('4')" class="card">
+                        <div class="card-body">
+                          <h3>4</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('5')" class="card">
+                        <div class="card-body">
+                          <h3>5</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('6')" class="card">
+                        <div class="card-body">
+                          <h3>6</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('7')" class="card">
+                        <div class="card-body">
+                          <h3>7</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('8')" class="card">
+                        <div class="card-body">
+                          <h3>8</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('9')" class="card">
+                        <div class="card-body">
+                          <h3>9</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('0')" class="card">
+                        <div class="card-body">
+                          <h3>0</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('+')" class="card">
+                        <div class="card-body">
+                          <h3>+</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('-')" class="card">
+                        <div class="card-body">
+                          <h3>-</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('*')" class="card">
+                        <div class="card-body">
+                          <h3>*</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('/')" class="card">
+                        <div class="card-body">
+                          <h3>÷</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="appendToOutput('**')" class="card">
+                        <div class="card-body">
+                          <h3>**</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center my-3">
+                <div class="col">
+                    <div onclick="appendToOutput('%')" class="card">
+                        <div class="card-body">
+                          <h3>%</h3>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div onclick="calculateResult()" class="card">
+                        <div class="card-body">
+                          <h3>=</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <div onclick="reset()" class="card">
+                        <div class="card-body">
+                          <h3 id="reset">Reset</h3>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<script>
+    function appendToOutput(value) {
+        const outputElement = document.getElementById('output');
+        if (outputElement.textContent === '0') {
+            outputElement.textContent = value;
+        } else {
+            outputElement.textContent += value;
+        }
+    }
+
+    function calculateResult() {
+        const outputElement = document.getElementById('output');
+        try {
+            const result = eval(outputElement.textContent);
+            outputElement.textContent = result;
+        } catch (error) {
+            outputElement.textContent = 'Error';
+        }
+    }
+
+    function reset(){
+        const output = document.getElementById('output');
+        output.inner = '0';
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

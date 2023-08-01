@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>input nama dan domisisli</h1>
+    <form id="myForm">
+        <label for="nama">nama</label>
+        <input type="text" id="nama" placeholder="masukkan nama">
+        <label for="domisili">domisili</label>
+        <input type="text" id="domisili" placeholder="domisili anda">
+        <input type="submit" value="submit">
+    </form>
+
+    <h3 id="output"></h3>
+
+    <script>
+        const form = document.getElementById('myForm');
+        const output = document.getElementById('output');
+
+        function reset(){
+            const nama = document.getElementById('nama');
+            const domisili = document.getElementById('domisili');
+            nama.value = "";
+            domisili.value = "";
+        }
+        form.addEventListener('submit', (e) =>{
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const domisili = document.getElementById('domisili').value;
+            const show = `halo ${nama} bagaimana cuaca di ${domisili}?`;
+            output.innerText = show;
+
+            reset();
+        })
+    </script>
+</body>
+</html>

@@ -1,2 +1,4 @@
 # javascript
-ini repo isinya cuma gw yg gabut nyoba-nyoba js
+
+kebanyakan isinya cuma pembelajaran js
+untuk projectnya ada di folder project

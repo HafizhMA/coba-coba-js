@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <section style="padding: 100px 0;">
+        <div class="container bg-dark rounded-3" style="padding: 20px;">
+            <form id="myForm">
+                <div class="header text-center text-white">
+                    <h3>Calculator BMI</h3>
+                </div>
+                <div class="mb-3">
+                  <label for="tinggibadan" class="form-label text-white">tinggi badan: (cm)</label>
+                  <input type="number" class="form-control" id="tinggibadan">
+                </div>
+                <div class="mb-3">
+                  <label for="beratbadan" class="form-label text-white">berat badan: (cm)</label>
+                  <input type="number" class="form-control" id="beratbadan">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+              <div id="hasil" class="text-white my-3"></div>
+        </div>
+    </section>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+        const form = document.getElementById('myForm');
+        const output = document.getElementById('hasil');
+        const tinggi = document.getElementById('tinggibadan');
+        const berat = document.getElementById('beratbadan');
+
+        function resetInputan(){
+            tinggi.value = '';
+            berat.value = '';
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const tinggiValue = tinggi.value / 100; // konversi cm ke meter
+            const beratValue = berat.value;
+            
+            const perhitunganBMI = beratValue / (tinggiValue * tinggiValue);
+            if (perhitunganBMI < 18.5) {
+                output.innerHTML = `<p>perhitungan berat badan anda adalah ${perhitunganBMI.toFixed(2)}</p>
+                <p>Kesimpulannya: berat badan anda <strong>kurang</strong> (underweight)</p>`;
+            } else if (perhitunganBMI >= 18.5 && perhitunganBMI < 25.0) {
+                output.innerHTML = `<p>perhitungan berat badan anda adalah ${perhitunganBMI.toFixed(2)}</p>
+                <p>Kesimpulannya: berat badan anda <strong>normal</strong> (normal weight)</p>`;
+            } else if (perhitunganBMI >= 25.0 && perhitunganBMI < 30.0) {
+                output.innerHTML = `<p>perhitungan berat badan anda adalah ${perhitunganBMI.toFixed(2)}</p>
+                <p>Kesimpulannya: anda <strong>kelebihan berat badan</strong> (overweight)</p>`;
+            } else {
+                output.innerHTML = `<p>perhitungan berat badan anda adalah ${perhitunganBMI.toFixed(2)}</p>
+                <p>Kesimpulannya: anda <strong>obesitas</strong> (obesity)</p>`;
+            }
+            resetInputan();
+        }) 
+    </script>
+</body>
+</html>

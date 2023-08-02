@@ -20,7 +20,7 @@
                         </div>
                     </form>
                     <div class="imgcard text-center">
-                        <img src="asset/clear.png">
+                        <img id="gambarCuaca" src="asset/clear.png">
                     </div>
                     <div class="suhuDanKota text-center" style="margin-bottom: 50px;">
                         <h2 id="suhu">22</h2>
@@ -37,38 +37,58 @@
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" async></script>
     <script>
-        const apiKey = "32d2757e96d10dde0f49a6ce771b0ca8";
+        const apiKey = "";
         const api = `https://api.openweathermap.org/data/2.5/weather?q=`;
         const form = document.getElementById('formSy');
         const search = document.getElementById('search');
+        const imgCuaca = document.getElementById('gambarCuaca');
         const suhuElement = document.getElementById('suhu');
         const kotaElement = document.getElementById('kota');
         const humidityElement = document.getElementById('humidity');
         const windSpeedElement = document.getElementById('windSpeed');
 
-        function reset(){
-            search.value ='';
-        }
-
         async function weather(kota) {
-            const response = await fetch(`${api}${kota}&appid=${apiKey}`);
-            const data = await response.json();
-            console.log(data);
+            try {
+                const response = await fetch(`${api}${kota}&appid=${apiKey}`);
+                const data = await response.json();
 
-            suhuElement.innerHTML = `${Math.round(data.main.temp)}°c`;
-            kotaElement.innerHTML = data.name;
-            humidityElement.innerHTML = `Humidity: ${data.main.humidity}`;
-            windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed} km/h`;
+                if (data.cod === '404') {
+                    imgCuaca.removeAttribute('src');
+                    kotaElement.innerHTML = 'Data Tidak ditemukan';
+                    suhuElement.innerHTML = '';
+                    humidityElement.innerHTML = '';
+                    windSpeedElement.innerHTML = '';
+                } else {
+                    // munculkan output
+                    // penyesuaian img terhadap keadaan cuaca
+                    if (data.weather[0].main == 'Clouds'){
+                        imgCuaca.src = "asset/clouds.png";
+                    } else if(data.weather[0].main === 'Mist'){
+                        imgCuaca.src = "asset/mist.png";
+                    } else if(data.weather[0].main === 'Clear'){
+                        imgCuaca.src = "asset/clear.png";
+                    } else if(data.weather[0].main === 'Rain'){
+                        imgCuaca.src = "asset/rain.png";
+                    } else if(data.weather[0].main === 'Drizzle'){
+                        imgCuaca.src = "asset/drizzle.png";
+                    }
+                    suhuElement.innerHTML = `${Math.round(data.main.temp)}°c`;
+                    kotaElement.innerHTML = data.name;
+                    humidityElement.innerHTML = `Humidity: ${data.main.humidity}`;
+                    windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed} km/h`;
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
         }
 
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
             weather(search.value);
-            reset();
         });
 
-        
-        weather("London"); 
+        // Load default 
+        weather("London");
     </script>
 </body>
 </html>

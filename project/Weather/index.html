@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <section style="padding: 100px 0;">
+        <div class="container">
+
+            <div class="card bg-dark text-white rounded-3" style="padding: 20px;">
+                <div class="card-body">
+                    <form id="formSy">
+                        <div class="mb-3 text-center">
+                            <label for="search">Search:</label>
+                            <input class="mx-2" type="text" id="search">
+                            <button type="submit" class="btn btn-primary">search</button>
+                        </div>
+                    </form>
+                    <div class="imgcard text-center">
+                        <img src="asset/clear.png">
+                    </div>
+                    <div class="suhuDanKota text-center" style="margin-bottom: 50px;">
+                        <h2 id="suhu">22</h2>
+                        <h3 id="kota">Gatau</h3>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4 id="humidity">humidity</h4>
+                        <h4 id="windSpeed">windspeed</h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" async></script>
+    <script>
+        const apiKey = "32d2757e96d10dde0f49a6ce771b0ca8";
+        const api = `https://api.openweathermap.org/data/2.5/weather?q=`;
+        const form = document.getElementById('formSy');
+        const search = document.getElementById('search');
+        const suhuElement = document.getElementById('suhu');
+        const kotaElement = document.getElementById('kota');
+        const humidityElement = document.getElementById('humidity');
+        const windSpeedElement = document.getElementById('windSpeed');
+
+        function reset(){
+            search.value ='';
+        }
+
+        async function weather(kota) {
+            const response = await fetch(`${api}${kota}&appid=${apiKey}`);
+            const data = await response.json();
+            console.log(data);
+
+            suhuElement.innerHTML = `${Math.round(data.main.temp)}°c`;
+            kotaElement.innerHTML = data.name;
+            humidityElement.innerHTML = `Humidity: ${data.main.humidity}`;
+            windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed} km/h`;
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            weather(search.value);
+            reset();
+        });
+
+        
+        weather("London"); 
+    </script>
+</body>
+</html>

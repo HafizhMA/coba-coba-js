@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <section style="padding: 100px 0;">
+        <div class="container bg-dark text-white rounded-3" style="padding: 20px;">
+            <div class="head text-center">
+                <h3>menghitung jumlah huruf</h3>
+            </div>
+            <form id="formSy">
+                <div class="mb-3">
+                  <label for="karakterLength" class="form-label">inputkan karakter:</label>
+                  <input type="text" class="form-control" id="karakterLength">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+              <div id="jumlahHuruf"></div>
+        </div>
+    </section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+        const form = document.getElementById('formSy');
+        const jumlahHuruf = document.getElementById('jumlahHuruf');
+        const Arr = [];
+
+        function reset(){
+            const input = document.getElementById('karakterLength');
+            input.value = '';
+        }
+
+        form.addEventListener('submit', (e) =>{
+            e.preventDefault();
+
+            const input = document.getElementById('karakterLength').value;
+            const value = `${input} berjumlah ${input.length} karakter`;
+            Arr.push(value);
+            jumlahHuruf.innerHTML = Arr.map(item => `<p>${item}</p>`).join('');
+            reset();
+        })
+    </script>
+</body>
+</html>

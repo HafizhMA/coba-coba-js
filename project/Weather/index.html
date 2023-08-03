@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Weather</title>
 </head>
 <body>
     <section style="padding: 100px 0;">
@@ -37,7 +37,7 @@
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" async></script>
     <script>
-        const apiKey = "";
+        const apiKey = "5770e65c28460e1c96c6dd165edd5560";
         const api = `https://api.openweathermap.org/data/2.5/weather?q=`;
         const form = document.getElementById('formSy');
         const search = document.getElementById('search');
@@ -72,7 +72,7 @@
                     } else if(data.weather[0].main === 'Drizzle'){
                         imgCuaca.src = "asset/drizzle.png";
                     }
-                    suhuElement.innerHTML = `${Math.round(data.main.temp)}°c`;
+                    suhuElement.innerHTML = `${Math.round(data.main.temp - 273.15)}°c`;
                     kotaElement.innerHTML = data.name;
                     humidityElement.innerHTML = `Humidity: ${data.main.humidity}`;
                     windSpeedElement.innerHTML = `Wind Speed: ${data.wind.speed} km/h`;

@@ -80,29 +80,50 @@ const form = document.getElementById('myForm');
             const telponValue = telpon.value;
             const alamatValue = alamat.value;
 
-            const cardData = `
-                <div class="card my-3 shadow-lg bg-body-secondary text-black" style="padding: 30px;">
-                    <div class="row">
-                        <div class="col-5 text-center my-auto">
-                            <h3>${namaValue}</h3>
-                        </div>
-                        <div class="col border-start border-black text-center my-auto">
-                            <div class="skill">
-                                <h4>Skills:</h4>
-                                <p>${skillValue}</p>
-                            </div>
-                            <div class="telpon">
-                                <h4>No Telpon:</h4>
-                                <p>${telponValue}</p>
-                            </div>
-                            <div class="alamat">
-                                <h4>Alamat:</h4>
-                                <p>${alamatValue}</p>
-                            </div>
-                        </div>
-                    </div>
+            const escapeHTML = (unsafe) => {
+  return unsafe.replace(/[&<"']/g, (match) => {
+    switch (match) {
+      case '&':
+        return '&amp;';
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '"':
+        return '&quot;';
+      case "'":
+        return '&#039;';
+      default:
+        return match;
+    }
+  });
+};
+
+// ... kode selanjutnya ...
+
+const cardData = `
+    <div class="card my-3 shadow-lg bg-body-secondary text-black" style="padding: 30px;">
+        <div class="row">
+            <div class="col-5 text-center my-auto">
+                <h3>${escapeHTML(namaValue)}</h3>
+            </div>
+            <div class="col border-start border-black text-center my-auto">
+                <div class="skill">
+                    <h4>Skills:</h4>
+                    <p>${escapeHTML(skillValue)}</p>
                 </div>
-            `;
+                <div class="telpon">
+                    <h4>No Telpon:</h4>
+                    <p>${escapeHTML(telponValue)}</p>
+                </div>
+                <div class="alamat">
+                    <h4>Alamat:</h4>
+                    <p>${escapeHTML(alamatValue)}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
 
             arr.push(cardData); 
             output.innerHTML = arr.join(''); 

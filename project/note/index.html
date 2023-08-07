@@ -42,9 +42,21 @@
     const noteInput = document.getElementById('note');
     const output = document.getElementById('output');
 
-    const notes = [];
+    let notes = [];
 
-    // display note
+    function saveLocalStorage() {
+      localStorage.setItem('notes', JSON.stringify(notes));
+    }
+
+    function loadDataFromLocalStorage() {
+      const storedData = localStorage.getItem('notes');
+      if (storedData) {
+        notes = JSON.parse(storedData);
+      } else {
+        notes = [];
+      }
+    }
+
     function updateOutput() {
       if (notes.length === 0) {
         output.innerHTML = '<p class="text-white">notes masih kosong.</p>';
@@ -52,16 +64,15 @@
       }
 
       const notesHtml = notes.map((note, index) => `
-      <div class="item my-3 rounded-3 bg-dark-subtle" style="padding: 10px;">
-      <pre>${note}</pre>
-      <button onclick="updateNote(${index})" class="btn btn-warning">update</button>
-      <button onclick="deleteNote(${index})" class="btn btn-danger">delete</button>
-      </div>
+        <div class="item my-3 rounded-3 bg-dark-subtle" style="padding: 10px;">
+          <pre>${note}</pre>
+          <button type="button" onclick="updateNote(${index})" class="btn btn-warning">Update</button>
+          <button type="button" onclick="deleteNote(${index})" class="btn btn-danger">Delete</button>
+        </div>
       `).join('');
       output.innerHTML = notesHtml;
     }
 
-    // add note
     function addNote() {
       const noteValue = noteInput.value.trim();
 
@@ -75,7 +86,8 @@
 
       notes.push(noteValue);
       updateOutput();
-      noteInput.value = ''; // Reset 
+      noteInput.value = '';
+      saveLocalStorage();
     }
 
     form.addEventListener('submit', (e) => {
@@ -83,12 +95,11 @@
       addNote();
     });
 
-    // update note
     function updateNote(index) {
       const updateForm = document.getElementById('updateForm');
       const updateNoteInput = document.getElementById('updateNote');
-      updateNoteInput.value = notes[index]; // Set the textarea value to the current note content
-      updateForm.style.display = 'block'; // Show the update form
+      updateNoteInput.value = notes[index];
+      updateForm.style.display = 'block';
 
       updateForm.onsubmit = (e) => {
         e.preventDefault();
@@ -99,18 +110,22 @@
         }
 
         notes[index] = updatedNoteValue;
-        updateForm.style.display = 'none'; // sembunyikan update form
+        updateForm.style.display = 'none';
         updateOutput();
+        saveLocalStorage();
       };
     }
 
     function deleteNote(index) {
+      notes.splice(index, 1);
       const updateForm = document.getElementById('updateForm');
       updateForm.style.display = 'none';
-      //delete cukup yang bawah, bagian atas hanya efek untuk menghilangkan form update
-      notes.splice(index, 1);
       updateOutput();
+      saveLocalStorage();
     }
+
+    loadDataFromLocalStorage();
+    updateOutput(); // Call this function after loading data
 
   </script>
 </body>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="row" id="rowRestoran">
+                
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script>
+        const api = `https://restaurant-api.dicoding.dev/list`;
+        const rowRestoran = document.getElementById('rowRestoran');
+        const smallResolution = `https://restaurant-api.dicoding.dev/images/small/`;
+        const mediumResolution = `https://restaurant-api.dicoding.dev/images/medium/`;
+        const largeResolution = `https://restaurant-api.dicoding.dev/images/large/`;
+
+        async function restoranList(){
+            try{
+                const response = await fetch(`${api}`);
+                const data = await response.json();
+                console.log(data);
+
+                data.restaurants.forEach(restaurant => {
+                    const cardDiv = document.createElement('div');
+                    cardDiv.className = 'col-lg-4 col-md-6 col-sm-12 my-3';
+                    cardDiv.innerHTML = `
+                        <div class="card">
+                            <img src="${mediumResolution}${restaurant.pictureId}" alt="${restaurant.name}" height="200px">
+                            <div class="card-body">
+                                <h4 class="card-title">${restaurant.name}</h4>
+                                <div class="cityNrating d-flex justify-content-between">
+                                    <h5 class="card-title">${restaurant.city}</h5>
+                                    <h5 class="card-title">Rating: ${restaurant.rating}</h5>
+                                </div>
+                                <p class="card-text">${_.truncate(restaurant.description, { length: 200 })}</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    `;
+
+                    rowRestoran.appendChild(cardDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
+        }
+
+        restoranList();
+
+    </script>
+</body>
+
+</html>

@@ -62,7 +62,7 @@
     const form = document.getElementById('myForm');
     const updateForm = document.getElementById('updateForm');
     const output = document.getElementById('output');
-    const cards = [];
+    let cards = [];
 
     function escapeHTML(unsafe) {
       return unsafe.replace(/[&<"']/g, (match) => {
@@ -84,6 +84,11 @@
     }
 
     function renderCards() {
+      if (cards.length === 0){
+        output.innerText = 'Data masih kosong';
+        return;
+      }
+      
       const cardHtml = cards.map((card, index) => `
         <div class="card my-3 shadow-lg bg-body-secondary text-black" style="padding: 30px;">
           <div class="row">
@@ -111,6 +116,7 @@
       `).join('');
 
       output.innerHTML = cardHtml;
+      saveToLocalStorage();
     }
 
     function updateCard(index) {
@@ -144,6 +150,18 @@
       renderCards();
     }
 
+    function saveToLocalStorage() {
+      localStorage.setItem('cards', JSON.stringify(cards));
+    }
+
+    function loadFromLocalStorage() {
+      const storedCards = localStorage.getItem('cards');
+      if (storedCards) {
+        cards = JSON.parse(storedCards);
+        renderCards();
+      }
+    }
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -159,6 +177,11 @@
         renderCards();
         form.reset();
       }
+    });
+
+    // inisialisasi ketika di load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadFromLocalStorage();
     });
 
   </script>
